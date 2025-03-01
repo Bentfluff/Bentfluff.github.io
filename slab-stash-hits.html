@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slab Stash Hits | Slab-Stash</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Notification Bar -->
+    <div id="notification" class="notification"></div>
+
+    <!-- Cart Icon -->
+    <div id="cart" class="cart-icon">
+        <img src="images/cart-icon.png" alt="Cart" style="width: 25px;">
+        <span id="cart-count">0</span>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="logo">SLAB-STASH</div>
+        <ul class="nav-links">
+            <li><a href="index.html" class="nav-link">Home</a></li>
+            <li><a href="products.html" class="nav-link">Products</a></li>
+            <li><a href="slab-stash-hits.html" class="nav-link active">Slab Stash Hits</a></li>
+            <li><a href="contact.html" class="nav-link">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <section class="content-page hits-list">
+        <h1>Slab Stash Hits</h1>
+        <p>Explore the incredible graded coins you could uncover from our mystery packs—each with its own rarity!</p>
+        <table id="hits-table" class="hits-table"></table>
+        <p><em>These are the potential hits from our packs—join us to uncover your own rare treasures!</em></p>
+    </section>
+
+    <!-- Cart Popup -->
+    <div id="cart-popup" class="cart-popup" style="display: none;">
+        <h2>Your Cart</h2>
+        <div id="cart-items-popup"></div>
+        <div class="cart-actions">
+            <button onclick="updateCartQuantity()">Update Quantity</button>
+            <button onclick="goToCheckout()">Checkout</button>
+            <button onclick="closeCartPopup()">Close</button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2025 Slab-Stash. Unleash the Coin Chaos!</p>
+        <ul class="footer-links">
+            <li><a href="about.html" class="footer-link">About Us</a></li>
+            <li><a href="privacy.html" class="footer-link">Privacy Policy</a></li>
+            <li><a href="terms.html" class="footer-link">Terms & Conditions</a></li>
+        </ul>
+    </footer>
+
+    <script src="https://js.stripe.com/v3/"></script>
+    <script src="scripts.js"></script>
+</body>
+</html>
