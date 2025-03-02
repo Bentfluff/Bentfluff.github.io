@@ -407,3 +407,29 @@ document.getElementById('open-contact-form')?.addEventListener('click', (e) => {
     e.preventDefault();
     document.getElementById('contact-form-popup').style.display = 'block';
 });
+
+// Handle contact form submission
+document.getElementById('contact-form').addEventListener('submit', async (e) => {
+  e.preventDefault(); // Prevent default form submission
+  const form = e.target;
+  const data = new FormData(form);
+
+  try {
+    const response = await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      body: data
+    });
+    const result = await response.json();
+    if (result.success) {
+      form.reset(); // Clear the form fields
+      closeContactForm(); // Use existing function to hide the popup
+      showNotification('Message sent successfully!'); // Use your notification function
+    } else {
+      console.error('Submission failed:', result.message);
+      showNotification('Failed to send message. Check your access key or try again.');
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    showNotification('Something went wrong. Please try again.');
+  }
+});
