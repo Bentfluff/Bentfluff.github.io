@@ -1,0 +1,15 @@
+{
+    "name": "slab-stash-backend",
+    "version": "1.0.0",
+    "description": "Backend for Slab-Stash contact form",
+    "main": "server.js",
+    "scripts": {
+        "start": "node server.js"
+    },
+    "dependencies": {
+        "express": "^4.18.2",
+        "nodemailer": "^6.9.7",
+        "cors": "^2.8.5",
+        "dotenv": "^16.4.5"
+    }
+}
