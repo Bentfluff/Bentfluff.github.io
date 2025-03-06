@@ -1,13 +1,13 @@
 // Global variables
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
 let inventory = {
-    'Basic Pack': 10,
-    'Premium Pack': 0, // Now coming soon, no inventory
-    'Limited Edition Pack': 5
+    'Basic Pack': 0, // Out of stock
+    'Premium Pack': 0, // Out of stock
+    'Limited Edition Pack': 0 // Out of stock
 };
 
-// Load Stripe
-const stripe = Stripe('your-publishable-key');
+// Load Stripe with test key (replace with your real test key later)
+const stripe = Stripe('pk_test_51J3XJ2KZm9x9x9x9x9x9x9x9x9x9x9x9x9x9x9x9x9x9x9x9x9x9x9x9x9x9x9');
 
 // Function to set or reset inventory (call manually or via admin interface)
 function setInventory(productName, amount) {
@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
     updateCartIcon(cart.reduce((sum, item) => sum + item.quantity, 0));
     loadProducts();
     updateBuyButtons();
-    cartElement.addEventListener('click', openCartPopup); // Ensure cart icon opens popup
+    cartElement.addEventListener('click', openCheckoutScreen);
 
     // Show contact form popup on Contact page load
     if (window.location.pathname === '/contact.html' || window.location.pathname === '/contact') {
@@ -53,7 +53,7 @@ function loadProducts() {
     productGrid.innerHTML = '';
     products.forEach(product => {
         const productDiv = document.createElement('div');
-        productDiv.className = `product-icon ${product.inventory === 0 ? 'coming-soon' : ''}`; // Fixed typo in class name
+        productDiv.className = `product-icon ${product.inventory === 0 ? 'coming-soon' : ''}`;
         productDiv.setAttribute('data-id', product.id);
         productDiv.innerHTML = `
             <img src="${product.image}" alt="${product.name} Icon">
@@ -61,21 +61,21 @@ function loadProducts() {
             <p>Rip into the ${product.name} for $${product.price.toFixed(2)} and uncover a mystery graded coin—silver or gold, the thrill is yours!</p>
             <button class="${product.inventory === 0 ? 'coming-soon-btn' : 'buy-btn'}" 
                     ${product.inventory === 0 ? '' : `id="buy-btn-${product.id}" onclick="addToCart(this)"`}>
-                ${product.inventory === 0 ? 'Coming Soon' : 'Add to Cart'}
+                ${product.inventory === 0 ? 'Out of Stock' : 'Add to Cart'}
             </button>
         `;
         productGrid.appendChild(productDiv);
     });
 }
 
-// Add item to cart (initially adds 1, quantity can be adjusted in popup)
+// Add item to cart
 function addToCart(productElement) {
     const productId = productElement.getAttribute('data-id');
     const productName = productElement.parentElement.querySelector('h2').textContent.split(' - ')[0];
     const productPrice = parseFloat(productElement.parentElement.querySelector('h2').textContent.split(' - ')[1].replace('$', ''));
 
     if (inventory[productName] <= 0) {
-        showNotification("Sorry, this pack is currently sold out or coming soon. Please check back later!");
+        showNotification("Sorry, this pack is out of stock.");
         return;
     }
 
@@ -90,19 +90,17 @@ function addToCart(productElement) {
     } else {
         cart.push({ id: productId, name: productName, price: productPrice, quantity: 1 });
     }
-    inventory[productName] -= 1; // Decrease inventory by 1
+    inventory[productName] -= 1;
     localStorage.setItem('cart', JSON.stringify(cart));
     localStorage.setItem('inventory', JSON.stringify(inventory));
     updateCartIcon(cart.reduce((sum, item) => sum + item.quantity, 0));
     showNotification(`${productName} added to cart!`);
     updateBuyButtons();
-    // Do not open popup automatically; user must click cart icon
 }
 
 // Update cart icon display
 function updateCartIcon(count) {
     document.getElementById('cart-count').textContent = count;
-    document.querySelector('.cart-options').style.display = count > 0 ? 'flex' : 'none';
 }
 
 // Show notification
@@ -113,209 +111,90 @@ function showNotification(message) {
     setTimeout(() => notification.classList.remove('show'), 3000);
 }
 
-// Continue shopping
-function continueShopping() {
-    document.querySelector('.cart-options').style.display = 'none';
-}
-
-// Open cart popup
-function openCartPopup() {
-    displayCartPopup();
-    document.getElementById('cart-popup').style.display = 'block';
-}
-
-// Close cart popup
-function closeCartPopup() {
-    document.getElementById('cart-popup').style.display = 'none';
-}
-
-// Display cart in popup
-function displayCartPopup() {
-    const cartItemsPopup = document.getElementById('cart-items-popup');
+// Open all-in-one checkout screen
+function openCheckoutScreen() {
+    const checkoutPopup = document.createElement('div');
+    checkoutPopup.id = 'checkout-popup';
+    checkoutPopup.style.cssText = 'position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 20px; border: 1px solid #ccc; z-index: 1000;';
+    
+    let cartHtml = '<h2>Checkout</h2>';
     cart = JSON.parse(localStorage.getItem('cart')) || [];
     if (!cart.length) {
-        cartItemsPopup.innerHTML = '<p>Your cart is empty!</p>';
-        return;
-    }
-
-    let totalItems = 0;
-    cartItemsPopup.innerHTML = '';
-    cart.forEach(item => {
-        totalItems += item.quantity;
-        cartItemsPopup.innerHTML += `
-            <p>${item.name} - $${item.price.toFixed(2)} x 
-            <input type="number" class="quantity-input" data-id="${item.id}" value="${item.quantity}" min="1" max="${inventory[item.name] + item.quantity}">
-            <button onclick="removeFromCart(${item.id})">Remove</button>
-            = $${(item.price * item.quantity).toFixed(2)}</p>
-        `;
-    });
-    updateCartIcon(totalItems);
-}
-
-// Update cart quantity from popup
-function updateCartQuantity() {
-    const quantityInputs = document.querySelectorAll('.quantity-input');
-    cart = JSON.parse(localStorage.getItem('cart')) || [];
-    let totalItems = 0;
-
-    quantityInputs.forEach(input => {
-        const productId = input.getAttribute('data-id');
-        const newQuantity = parseInt(input.value);
-        const product = cart.find(item => item.id === productId);
-        const productName = product.name;
-
-        if (newQuantity < 1) {
-            input.value = 1;
-            return;
-        }
-        if (newQuantity > (inventory[productName] + product.quantity)) {
-            input.value = inventory[productName] + product.quantity;
-            showNotification(`Limited to ${inventory[productName] + product.quantity} ${productName}(s) available.`);
-            return;
-        }
-
-        const quantityDifference = newQuantity - product.quantity;
-        product.quantity = newQuantity;
-        inventory[productName] += quantityDifference; // Adjust inventory based on change
-        totalItems += newQuantity;
-    });
-
-    localStorage.setItem('cart', JSON.stringify(cart));
-    localStorage.setItem('inventory', JSON.stringify(inventory));
-    updateCartIcon(totalItems);
-    displayCartPopup();
-    updateBuyButtons();
-    showNotification('Cart updated successfully!');
-}
-
-// Remove item from cart
-function removeFromCart(productId) {
-    const productName = cart.find(item => item.id === productId).name;
-    cart = cart.filter(item => item.id !== productId); // Remove the item from the cart
-    inventory[productName] += 1; // Restore inventory for the removed item
-    localStorage.setItem('cart', JSON.stringify(cart));
-    localStorage.setItem('inventory', JSON.stringify(inventory));
-    updateCartIcon(cart.reduce((sum, item) => sum + item.quantity, 0));
-    displayCartPopup(); // Refresh the cart popup
-    updateBuyButtons(); // Update buy buttons in case inventory changes
-    showNotification(`${productName} removed from cart!`);
-}
-
-// Go to checkout
-function goToCheckout() {
-    closeCartPopup();
-    window.location.href = 'checkout.html';
-}
-
-// Update all buy buttons based on inventory
-function updateBuyButtons() {
-    const buyButtons = document.querySelectorAll('.buy-btn');
-    buyButtons.forEach(button => {
-        const productId = button.id.split('-')[2];
-        const productName = document.querySelector(`[data-id="${productId}"] h2`).textContent.split(' - ')[0];
-        if (inventory[productName] <= 0) {
-            button.textContent = 'Sold Out';
-            button.classList.add('sold-out');
-            button.removeAttribute('onclick');
-        } else {
-            button.textContent = 'Add to Cart';
-            button.classList.remove('sold-out');
-            button.setAttribute('onclick', `addToCart(this)`);
-        }
-    });
-}
-
-// Display cart on checkout page
-function displayCart() {
-    const cartItems = document.getElementById('cart-items');
-    cart = JSON.parse(localStorage.getItem('cart')) || [];
-    if (!cart.length) {
-        cartItems.innerHTML = '<p>Your cart is empty!</p>';
-        return;
-    }
-
-    let subtotal = 0;
-    cartItems.innerHTML = '<h2>Your Packs</h2>';
-    cart.forEach(item => {
-        subtotal += item.price * item.quantity;
-        cartItems.innerHTML += `
-            <p>${item.name} - $${item.price.toFixed(2)} x ${item.quantity} = $${(item.price * item.quantity).toFixed(2)}</p>
-        `;
-    });
-
-    const shippingSelect = document.getElementById('shipping-option');
-    const shippingCost = shippingSelect.value === 'express' ? 20.00 : 10.00;
-    const total = subtotal + shippingCost;
-    cartItems.innerHTML += `<p><strong>Subtotal: $${subtotal.toFixed(2)}</strong></p>`;
-    cartItems.innerHTML += `<p><strong>Shipping: $${shippingCost.toFixed(2)}</strong></p>`;
-    cartItems.innerHTML += `<p><strong>Total: $${total.toFixed(2)}</strong></p>`;
-
-    shippingSelect.addEventListener('change', () => displayCart());
-}
-
-// Handle checkout form submission
-document.getElementById('checkout-form').addEventListener('submit', async (e) => {
-    e.preventDefault();
-
-    const name = document.getElementById('name').value;
-    const email = document.getElementById('email').value;
-    const address = document.getElementById('address').value;
-    const shippingOption = document.getElementById('shipping-option').value;
-
-    if (!name || !email || !address) {
-        showNotification('Please fill in all fields.');
-        return;
-    }
-
-    // Validate email format
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-        showNotification('Please enter a valid email address.');
-        return;
-    }
-
-    showNotification('Processing payment...');
-
-    // Send to backend for payment processing (replace with actual backend integration)
-    try {
-        const response = await fetch('http://localhost:3000/create-payment-intent', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                items: cart,
-                shipping: shippingOption === 'express' ? 20.00 : 10.00,
-                customer: { name, email, address }
-            })
+        cartHtml += '<p>Your cart is empty!</p>';
+    } else {
+        let subtotal = 0;
+        cartHtml += '<div id="cart-items">';
+        cart.forEach(item => {
+            subtotal += item.price * item.quantity;
+            cartHtml += `
+                <p>${item.name} - $${item.price.toFixed(2)} x ${item.quantity} = $${(item.price * item.quantity).toFixed(2)}</p>
+            `;
         });
+        const shippingCost = 10.00;
+        const total = subtotal + shippingCost;
+        cartHtml += `
+            <p><strong>Subtotal: $${subtotal.toFixed(2)}</strong></p>
+            <p><strong>Shipping: $${shippingCost.toFixed(2)}</strong></p>
+            <p><strong>Total: $${total.toFixed(2)}</strong></p>
+        </div>
+        <form id="checkout-form">
+            <label>Name: <input type="text" id="name" required></label><br>
+            <label>Email: <input type="email" id="email" required></label><br>
+            <label>Address: <textarea id="address" required></textarea></label><br>
+            <div id="card-element"></div>
+            <button type="submit">Pay Now</button>
+            <button type="button" onclick="closeCheckoutScreen()">Close</button>
+        </form>`;
+    }
+    
+    checkoutPopup.innerHTML = cartHtml;
+    document.body.appendChild(checkoutPopup);
 
-        const { clientSecret } = await response.json();
+    const elements = stripe.elements();
+    const card = elements.create('card');
+    card.mount('#card-element');
 
-        const { error } = await stripe.confirmPayment({
-            clientSecret,
-            confirmParams: {
-                return_url: 'https://slab-stash.com/success.html'
+    document.getElementById('checkout-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const address = document.getElementById('address').value;
+
+        let stockAvailable = true;
+        cart.forEach(item => {
+            if (inventory[item.name] < item.quantity) {
+                stockAvailable = false;
+                showNotification(`${item.name} is out of stock.`);
             }
         });
 
-        if (error) {
-            throw new Error(error.message);
-        }
+        if (!stockAvailable) return;
 
-        // Payment success simulation (replace with real backend logic)
-        setTimeout(() => {
-            showNotification(`Order confirmed! We’ll ship your ${cart.map(item => item.name).join(', ')} to ${address}.`);
-            console.log({
-                customer: { name, email, address },
-                items: cart,
-                total: cart.reduce((sum, item) => sum + (item.price * item.quantity), 0) + (shippingOption === 'express' ? 20.00 : 10.00)
+        const { error, paymentMethod } = await stripe.createPaymentMethod({
+            type: 'card',
+            card: card,
+            billing_details: { name, email }
+        });
+
+        if (error) {
+            showNotification(`Payment failed: ${error.message}`);
+        } else {
+            showNotification('Payment confirmed! Order placed.');
+            cart.forEach(item => {
+                inventory[item.name] -= item.quantity;
             });
             clearCart();
-            window.location.href = 'index.html';
-        }, 2000);
-    } catch (error) {
-        showNotification('Error processing payment: ' + error.message);
-    }
-});
+            closeCheckoutScreen();
+        }
+    });
+}
+
+// Close checkout screen
+function closeCheckoutScreen() {
+    const checkoutPopup = document.getElementById('checkout-popup');
+    if (checkoutPopup) checkoutPopup.remove();
+}
 
 // Clear cart
 function clearCart() {
@@ -323,13 +202,10 @@ function clearCart() {
     localStorage.setItem('cart', JSON.stringify(cart));
     localStorage.setItem('inventory', JSON.stringify(inventory));
     updateCartIcon(0);
-    displayCart();
-    displayCartPopup();
 }
 
-// Load and display hits data from JSON with fallback
+// Load and display hits data
 function loadHitsData() {
-    // Fallback data in case JSON fails (for testing or errors)
     const fallbackData = [
         { coinName: "1921 Morgan Silver Dollar (MS-65)", chances: 15 },
         { coinName: "Peace Dollar (MS-63)", chances: 18 },
@@ -381,7 +257,7 @@ function loadHitsData() {
         });
 }
 
-// Display hits table with provided data
+// Display hits table
 function displayHitsTable(data) {
     const table = document.getElementById('hits-table');
     table.innerHTML = `
@@ -402,13 +278,13 @@ function displayHitsTable(data) {
     `;
 }
 
-// Add event listener for the "Click Here" link to open the contact form
+// Open contact form
 document.getElementById('open-contact-form')?.addEventListener('click', (e) => {
     e.preventDefault();
     document.getElementById('contact-form-popup').style.display = 'block';
 });
 
-// Handle contact form submission with Web3Forms
+// Handle contact form submission
 document.getElementById('contact-form').addEventListener('submit', async (e) => {
     e.preventDefault();
     const form = e.target;
