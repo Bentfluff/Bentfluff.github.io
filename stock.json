@@ -3,20 +3,20 @@
     {
       "id": 1,
       "name": "Basic Pack",
-      "stock": 201,
+      "stock": 1,
       "dropDate": "2025-04-01"
     },
     {
       "id": 2,
       "name": "Premium Pack",
       "stock": 0,
-      "dropDate": "2025-05-01"
+      "dropDate": "2026-05-01"
     },
     {
       "id": 3,
       "name": "Limited Edition Pack",
       "stock": 0,
-      "dropDate": "2025-06-01"
+      "dropDate": "2026-06-01"
     }
   ]
 }
