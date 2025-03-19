@@ -263,13 +263,13 @@ footer {
     opacity: 0.9;
 }
 
-.product-icon.coming-soon {
+.product-icon.coming-soon, .product-icon.sold-out {
     opacity: 0.7;
     cursor: not-allowed;
-    border-style: solid; /* Remove dashed border for coming soon */
+    border-style: solid; /* Remove dashed border for coming soon/sold out */
 }
 
-.product-icon.coming-soon:hover {
+.product-icon.coming-soon:hover, .product-icon.sold-out:hover {
     transform: none;
     box-shadow: none;
     opacity: 0.7;
@@ -303,7 +303,7 @@ footer {
     line-height: 1.4;
 }
 
-.buy-btn, .coming-soon-btn {
+.buy-btn, .coming-soon-btn, .sold-out-btn {
     background: #000080; /* Navy blue */
     color: #C0C0C0; /* Silver */
     border: none;
@@ -322,7 +322,7 @@ footer {
     background: #000066; /* Darker navy blue */
 }
 
-.buy-btn.sold-out, .coming-soon-btn {
+.buy-btn.sold-out, .coming-soon-btn, .sold-out-btn {
     background: #D3D3D3; /* Light grey */
     color: #000080; /* Navy blue */
     cursor: not-allowed;
@@ -330,7 +330,7 @@ footer {
     box-shadow: 0 2px 5px rgba(139, 0, 0, 0.3); /* Blood red shadow */
 }
 
-.buy-btn.sold-out:hover, .coming-soon-btn:hover {
+.buy-btn.sold-out:hover, .coming-soon-btn:hover, .sold-out-btn:hover {
     transform: none;
     box-shadow: 0 2px 5px rgba(139, 0, 0, 0.3);
     background: #D3D3D3; /* No change on hover */
@@ -598,7 +598,6 @@ footer {
         padding: 8px 16px;
     }
 }
-/* Add to the end of styles.css */
 
 /* Contact Form Popup */
 .contact-form-popup {
