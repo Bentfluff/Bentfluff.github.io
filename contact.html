@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact | Slab-Stash</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Notification Bar -->
+    <div id="notification" class="notification"></div>
+
+    <!-- Cart Icon -->
+    <div id="cart" class="cart-icon">
+        <img src="images/cart-icon.png" alt="Cart" style="width: 25px;">
+        <span id="cart-count">0</span>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="logo">SLAB-STASH</div>
+        <ul class="nav-links">
+            <li><a href="index.html" class="nav-link">Home</a></li>
+            <li><a href="products.html" class="nav-link">Products</a></li>
+            <li><a href="slab-stash-hits.html" class="nav-link">Slab Stash Hits</a></li>
+            <li><a href="contact.html" class="nav-link active">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <section class="content-page">
+        <h1>Contact Us</h1>
+        <p>We’d love to hear from you! Please fill out the form below, and we’ll get back to you as soon as possible.</p>
+        <p>You can also reach us directly at customerservice@slab-stash.com.</p>
+    </section>
+
+    <!-- Contact Form Popup -->
+    <div id="contact-form-popup" class="contact-form-popup">
+        <div class="contact-form-content">
+            <h2>Contact Slab-Stash</h2>
+            <form action="https://api.web3forms.com/submit" method="POST" id="contact-form">
+                <input type="hidden" name="access_key" value="5ea219a2-cfca-4b9e-8de5-8ac472265931">
+                <label for="name">Your Name:</label>
+                <input type="text" id="name" name="name" required>
+
+                <label for="email">Your Email:</label>
+                <input type="email" id="email" name="email" required>
+
+                <label for="message">Message:</label>
+                <textarea id="message" name="message" required></textarea>
+
+                <button type="submit">Submit</button>
+                <button type="button" onclick="closeContactForm()">Close</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2025 Slab-Stash. Unleash the Coin Chaos!</p>
+        <ul class="footer-links">
+            <li><a href="about.html" class="footer-link">About Us</a></li>
+            <li><a href="privacy.html" class="footer-link">Privacy Policy</a></li>
+            <li><a href="terms.html" class="footer-link">Terms & Conditions</a></li>
+        </ul>
+    </footer>
+
+    <script src="https://js.stripe.com/v3/"></script>
+    <script src="scripts.js"></script>
+</body>
+</html>

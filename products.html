@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products | Slab-Stash</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Notification Bar -->
+    <div id="notification" class="notification"></div>
+
+    <!-- Cart Icon -->
+    <div id="cart" class="cart-icon">
+        <img src="images/cart-icon.png" alt="Cart" style="width: 25px;">
+        <span id="cart-count">0</span>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="logo">SLAB-STASH</div>
+        <ul class="nav-links">
+            <li><a href="index.html" class="nav-link">Home</a></li>
+            <li><a href="products.html" class="nav-link active">Products</a></li>
+            <li><a href="slab-stash-hits.html" class="nav-link">Slab Stash Hits</a></li>
+            <li><a href="contact.html" class="nav-link">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <section class="content-page">
+        <h1>Mystery Coin Packs</h1>
+        <p>Unbox the excitement with our packs—each contains a mystery graded coin ready to thrill!</p>
+        <div class="product-icon-grid">
+            <div class="product-icon" data-id="1">
+                <img src="images/basic-pack-icon.jpg" alt="Basic Pack Icon">
+                <h2>Basic Pack - $49.99</h2>
+                <p>Rip into the Basic Pack for $49.99 and uncover a mystery graded coin—silver or gold, the thrill is yours!</p>
+                <button id="buy-btn-1" class="buy-btn" onclick="addToCart(this)">Add to Cart</button>
+            </div>
+            <div class="product-icon coming-soon" data-id="2">
+                <img src="images/coming-soon-stock.jpg" alt="Premium Pack Icon">
+                <h2>Premium Pack - $99.99</h2>
+                <p>Coming Soon! Stay tuned for our exclusive Premium Pack with even rarer coins.</p>
+                <button class="coming-soon-btn">Coming Soon</button>
+            </div>
+            <div class="product-icon" data-id="3">
+                <img src="images/coming-soon-stock.jpg" alt="Limited Edition Pack Icon">
+                <h2>Limited Edition Pack - $149.99</h2>
+                <p>Rip into the Limited Edition Pack for $149.99 and uncover a mystery graded coin—silver or gold, the thrill is yours!</p>
+                <button id="buy-btn-3" class="buy-btn" onclick="addToCart(this)">Add to Cart</button>
+            </div>
+        </div>
+        <p><em>More packs coming soon—watch this space!</em></p>
+        <img src="images/pack-coming-soon.jpg" alt="Coming Soon Packs" class="content-image">
+    </section>
+
+    <!-- Cart Popup -->
+    <div id="cart-popup" class="cart-popup" style="display: none;">
+        <h2>Your Cart</h2>
+        <div id="cart-items-popup"></div>
+        <div class="cart-actions">
+            <button onclick="updateCartQuantity()">Update Quantity</button>
+            <button onclick="goToCheckout()">Checkout</button>
+            <button onclick="closeCartPopup()">Close</button>
+        </div>
+    </div>
+
+    <!-- Cart Options -->
+    <div class="cart-options" style="display: none;">
+        <button onclick="continueShopping()">Continue Shopping</button>
+        <button onclick="openCartPopup()">View Cart</button>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2025 Slab-Stash. Unleash the Coin Chaos!</p>
+        <ul class="footer-links">
+            <li><a href="about.html" class="footer-link">About Us</a></li>
+            <li><a href="privacy.html" class="footer-link">Privacy Policy</a></li>
+            <li><a href="terms.html" class="footer-link">Terms & Conditions</a></li>
+        </ul>
+    </footer>
+
+    <script src="https://js.stripe.com/v3/"></script>
+    <script src="scripts.js"></script>
+</body>
+</html>
