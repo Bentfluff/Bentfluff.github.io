@@ -153,4 +153,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const contactPopup = document.getElementById('contact-form-popup');
         if (contactPopup) contactPopup.style.display = 'block';
     }
+
+    // Sneak Peek button logic for index.html
+    const peekButton = document.getElementById('peek-button');
+    const peekImage = document.getElementById('peek-image');
+    if (peekButton && peekImage) { // Check if elements exist (only on index.html)
+        peekButton.addEventListener('click', function() {
+            peekImage.style.display = 'block'; // Reveal the image
+        });
+    }
 });

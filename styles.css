@@ -11,10 +11,11 @@
 
 /* Body */
 body {
-    background-color: #FFFFFF; /* White for clean look */
+    background: linear-gradient(to right, #C0C0C0, #4682B4); /* Silver to steel blue */
     color: #2E8B57; /* Emerald green for readability */
     margin: 0;
     padding: 0;
+    min-height: 100vh; /* Full page height */
 }
 
 /* Notification Bar */
@@ -47,7 +48,7 @@ body {
     background: #C0C0C0; /* Silver */
     padding: 5px 8px;
     border-radius: 12px;
-    box-shadow: 0 2px 5px rgba(139, 0, 0, 0.3); /* Blood red shadow for subtle depth */
+    box-shadow: 0 2px 5px rgba(139, 0, 0, 0.3);
     cursor: pointer;
 }
 
@@ -56,7 +57,7 @@ body {
 }
 
 #cart-count {
-    color: #000080; /* Navy blue */
+    color: #000080;
     font-weight: bold;
     margin-left: 5px;
     font-family: 'Orbitron', sans-serif;
@@ -70,17 +71,17 @@ body {
 
 /* Navbar */
 .navbar {
-    background: #FFFFFF; /* White */
+    background: rgba(255, 255, 255, 0.9); /* Semi-transparent white */
     padding: 15px 20px;
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    border-bottom: 2px solid #D3D3D3; /* Soft grey border */
-    box-shadow: 0 2px 10px rgba(139, 0, 0, 0.2); /* Blood red shadow for depth */
+    border-bottom: 2px solid #D3D3D3;
+    box-shadow: 0 2px 10px rgba(139, 0, 0, 0.2);
 }
 
 .logo {
-    color: #C0C0C0; /* Silver */
+    color: #C0C0C0;
     font-size: 32px;
     font-weight: bold;
     font-family: 'Orbitron', sans-serif;
@@ -95,7 +96,7 @@ body {
 }
 
 .nav-link, .footer-link {
-    color: #000080; /* Navy blue */
+    color: #000080;
     text-decoration: none;
     font-size: 18px;
     font-weight: bold;
@@ -104,12 +105,12 @@ body {
 }
 
 .nav-link:hover, .nav-link.active, .footer-link:hover {
-    color: #C0C0C0; /* Silver */
+    color: #C0C0C0;
     transform: scale(1.05);
 }
 
 .nav-link.active {
-    border-bottom: 2px solid #C0C0C0; /* Silver */
+    border-bottom: 2px solid #C0C0C0;
 }
 
 /* Hero Section */
@@ -118,27 +119,28 @@ body {
     padding: 100px 20px;
     min-height: 60vh;
     margin-bottom: 20px;
+    background: none; /* Remove solid background */
 }
 
 .hero-content {
-    background: #FFFFFF; /* White */
+    background: rgba(255, 255, 255, 0.9); /* Semi-transparent white */
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 4px 15px rgba(139, 0, 0, 0.3); /* Blood red shadow */
-    border: 2px dashed #000080; /* Navy blue border for playfulness */
+    box-shadow: 0 4px 15px rgba(139, 0, 0, 0.3);
+    border: 2px dashed #000080;
 }
 
 .hero h1 {
     font-size: 60px;
-    color: #C0C0C0; /* Silver */
+    color: #C0C0C0;
     margin-bottom: 20px;
     font-family: 'Orbitron', sans-serif;
-    text-shadow: 2px 2px 5px #000080; /* Navy blue shadow for depth */
+    text-shadow: 2px 2px 5px #000080;
 }
 
 .hero p {
     font-size: 24px;
-    color: #2E8B57; /* Emerald green */
+    color: #2E8B57;
     margin-bottom: 30px;
     font-family: 'Roboto', sans-serif;
 }
@@ -146,14 +148,14 @@ body {
 .btn {
     display: inline-block;
     padding: 15px 40px;
-    background: #000080; /* Navy blue */
-    color: #C0C0C0; /* Silver */
+    background: #000080;
+    color: #C0C0C0;
     text-decoration: none;
     border-radius: 20px;
     font-size: 20px;
     font-weight: bold;
-    box-shadow: 0 4px 15px rgba(0, 0, 128, 0.5); /* Navy blue shadow */
-    border: 2px solid #D3D3D3; /* Soft grey border */
+    box-shadow: 0 4px 15px rgba(0, 0, 128, 0.5);
+    border: 2px solid #D3D3D3;
     font-family: 'Orbitron', sans-serif;
     transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
 }
@@ -161,7 +163,7 @@ body {
 .btn:hover {
     transform: scale(1.05);
     box-shadow: 0 6px 20px rgba(0, 0, 128, 0.7);
-    background: #000066; /* Darker navy blue */
+    background: #000066;
 }
 
 .pulse {
@@ -179,23 +181,23 @@ body {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
-    background: #FFFFFF; /* White for readability */
+    background: rgba(255, 255, 255, 0.9); /* Semi-transparent white */
     border-radius: 10px;
-    box-shadow: 0 4px 15px rgba(211, 211, 211, 0.3); /* Soft grey shadow */
+    box-shadow: 0 4px 15px rgba(211, 211, 211, 0.3);
     overflow-y: auto;
     max-height: 60vh;
 }
 
 .content-page h1, .content-page h2 {
     font-size: 48px;
-    color: #C0C0C0; /* Silver */
+    color: #C0C0C0;
     margin-bottom: 20px;
     font-family: 'Orbitron', sans-serif;
 }
 
 .content-page p {
     font-size: 18px;
-    color: #2E8B57; /* Emerald green */
+    color: #2E8B57;
     line-height: 1.6;
     margin-bottom: 20px;
     font-family: 'Roboto', sans-serif;
@@ -205,20 +207,20 @@ body {
     max-width: 100%;
     height: auto;
     margin: 20px 0;
-    border: 2px dashed #D3D3D3; /* Soft grey border */
+    border: 2px dashed #D3D3D3;
     border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(139, 0, 0, 0.2); /* Blood red shadow for subtle depth */
+    box-shadow: 0 2px 10px rgba(139, 0, 0, 0.2);
 }
 
 /* Footer */
 footer {
     padding: 20px;
-    background: #FFFFFF; /* White */
-    color: #000080; /* Navy blue */
+    background: rgba(255, 255, 255, 0.9); /* Semi-transparent white */
+    color: #000080;
     text-align: center;
     font-size: 16px;
     text-transform: uppercase;
-    border-top: 2px solid #D3D3D3; /* Soft grey border */
+    border-top: 2px solid #D3D3D3;
     margin-top: 20px;
     font-family: 'Orbitron', sans-serif;
 }
@@ -233,7 +235,7 @@ footer {
 }
 
 .footer-link.active {
-    border-bottom: 2px solid #D3D3D3; /* Soft grey */
+    border-bottom: 2px solid #D3D3D3;
 }
 
 /* Product Icon Grid */
@@ -246,12 +248,12 @@ footer {
 }
 
 .product-icon {
-    background: #FFFFFF; /* White */
+    background: rgba(255, 255, 255, 0.9); /* Semi-transparent white */
     padding: 20px;
     border-radius: 10px;
     text-align: center;
-    box-shadow: 0 4px 15px rgba(139, 0, 0, 0.2); /* Blood red shadow */
-    border: 2px dashed #000080; /* Navy blue border */
+    box-shadow: 0 4px 15px rgba(139, 0, 0, 0.2);
+    border: 2px dashed #000080;
     transition: transform 0.3s, box-shadow 0.3s, opacity 0.3s;
     max-width: 300px;
     margin: 0 auto;
@@ -266,7 +268,7 @@ footer {
 .product-icon.coming-soon, .product-icon.sold-out {
     opacity: 0.7;
     cursor: not-allowed;
-    border-style: solid; /* Remove dashed border for coming soon/sold out */
+    border-style: solid;
 }
 
 .product-icon.coming-soon:hover, .product-icon.sold-out:hover {
@@ -289,14 +291,14 @@ footer {
 }
 
 .product-icon h2 {
-    color: #C0C0C0; /* Silver */
+    color: #C0C0C0;
     font-size: 24px;
     margin-bottom: 10px;
     font-family: 'Orbitron', sans-serif;
 }
 
 .product-icon p {
-    color: #2E8B57; /* Emerald green */
+    color: #2E8B57;
     font-size: 16px;
     margin-bottom: 15px;
     font-family: 'Roboto', sans-serif;
@@ -304,8 +306,8 @@ footer {
 }
 
 .buy-btn, .coming-soon-btn, .sold-out-btn {
-    background: #000080; /* Navy blue */
-    color: #C0C0C0; /* Silver */
+    background: #000080;
+    color: #C0C0C0;
     border: none;
     padding: 10px 20px;
     border-radius: 15px;
@@ -319,21 +321,21 @@ footer {
 .buy-btn:hover {
     transform: scale(1.05);
     box-shadow: 0 4px 15px rgba(0, 0, 128, 0.7);
-    background: #000066; /* Darker navy blue */
+    background: #000066;
 }
 
 .buy-btn.sold-out, .coming-soon-btn, .sold-out-btn {
-    background: #D3D3D3; /* Light grey */
-    color: #000080; /* Navy blue */
+    background: #D3D3D3;
+    color: #000080;
     cursor: not-allowed;
-    border: 2px solid #D3D3D3; /* Soft grey border */
-    box-shadow: 0 2px 5px rgba(139, 0, 0, 0.3); /* Blood red shadow */
+    border: 2px solid #D3D3D3;
+    box-shadow: 0 2px 5px rgba(139, 0, 0, 0.3);
 }
 
 .buy-btn.sold-out:hover, .coming-soon-btn:hover, .sold-out-btn:hover {
     transform: none;
     box-shadow: 0 2px 5px rgba(139, 0, 0, 0.3);
-    background: #D3D3D3; /* No change on hover */
+    background: #D3D3D3;
 }
 
 /* Cart Options */
@@ -342,19 +344,19 @@ footer {
     bottom: 20px;
     left: 50%;
     transform: translateX(-50%);
-    background: #FFFFFF; /* White */
+    background: rgba(255, 255, 255, 0.9); /* Semi-transparent white */
     padding: 15px 30px;
     border-radius: 20px;
-    box-shadow: 0 4px 15px rgba(139, 0, 0, 0.2); /* Blood red shadow */
+    box-shadow: 0 4px 15px rgba(139, 0, 0, 0.2);
     display: flex;
     gap: 15px;
     z-index: 1000;
-    border: 2px solid #000080; /* Navy blue border */
+    border: 2px solid #000080;
 }
 
 .cart-options button {
-    background: #000080; /* Navy blue */
-    color: #C0C0C0; /* Silver */
+    background: #000080;
+    color: #C0C0C0;
     border: none;
     padding: 10px 20px;
     border-radius: 15px;
@@ -368,7 +370,7 @@ footer {
 .cart-options button:hover {
     transform: scale(1.05);
     box-shadow: 0 4px 15px rgba(0, 0, 128, 0.7);
-    background: #000066; /* Darker navy blue */
+    background: #000066;
 }
 
 /* Checkout Section */
@@ -376,14 +378,14 @@ footer {
     max-width: 600px;
     margin: 20px auto;
     padding: 20px;
-    background: #FFFFFF; /* White */
+    background: rgba(255, 255, 255, 0.9); /* Semi-transparent white */
     border-radius: 10px;
-    box-shadow: 0 4px 15px rgba(139, 0, 0, 0.2); /* Blood red shadow */
-    border: 2px solid #000080; /* Navy blue border */
+    box-shadow: 0 4px 15px rgba(139, 0, 0, 0.2);
+    border: 2px solid #000080;
 }
 
 .checkout h1 {
-    color: #C0C0C0; /* Silver */
+    color: #C0C0C0;
     font-size: 36px;
     text-align: center;
     margin-bottom: 20px;
@@ -391,14 +393,14 @@ footer {
 }
 
 #cart-items h2 {
-    color: #C0C0C0; /* Silver */
+    color: #C0C0C0;
     font-size: 24px;
     margin-bottom: 10px;
     font-family: 'Orbitron', sans-serif;
 }
 
 #cart-items p {
-    color: #2E8B57; /* Emerald green */
+    color: #2E8B57;
     font-size: 16px;
     margin: 5px 0;
     font-family: 'Roboto', sans-serif;
@@ -411,18 +413,18 @@ footer {
 }
 
 #checkout-form label {
-    color: #000080; /* Navy blue */
+    color: #000080;
     font-size: 18px;
     font-family: 'Orbitron', sans-serif;
 }
 
 #checkout-form input, #checkout-form textarea, #checkout-form select {
     padding: 10px;
-    border: 2px solid #000080; /* Navy blue */
+    border: 2px solid #000080;
     border-radius: 5px;
     font-size: 16px;
     font-family: 'Roboto', sans-serif;
-    color: #2E8B57; /* Emerald green */
+    color: #2E8B57;
     width: 100%;
 }
 
@@ -432,8 +434,8 @@ footer {
 }
 
 #pay-button {
-    background: #000080; /* Navy blue */
-    color: #C0C0C0; /* Silver */
+    background: #000080;
+    color: #C0C0C0;
     border: none;
     padding: 12px 20px;
     border-radius: 15px;
@@ -447,7 +449,7 @@ footer {
 #pay-button:hover {
     transform: scale(1.05);
     box-shadow: 0 4px 15px rgba(0, 0, 128, 0.7);
-    background: #000066; /* Darker navy blue */
+    background: #000066;
 }
 
 /* Cart Popup */
@@ -456,23 +458,23 @@ footer {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: #FFFFFF;
+    background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent white */
     padding: 20px;
-    border: 2px dashed #000080; /* Navy blue dashed border */
-    box-shadow: 0 4px 15px rgba(139, 0, 0, 0.3); /* Blood red shadow */
+    border: 2px dashed #000080;
+    box-shadow: 0 4px 15px rgba(139, 0, 0, 0.3);
     z-index: 1000;
     display: none;
 }
 
 .cart-popup h2 {
-    color: #C0C0C0; /* Silver */
+    color: #C0C0C0;
     font-size: 24px;
     margin-bottom: 15px;
     font-family: 'Orbitron', sans-serif;
 }
 
 #cart-items-popup p {
-    color: #2E8B57; /* Emerald green */
+    color: #2E8B57;
     font-size: 16px;
     margin: 5px 0;
     font-family: 'Roboto', sans-serif;
@@ -495,8 +497,8 @@ footer {
 }
 
 .cart-actions button {
-    background: #000080; /* Navy blue */
-    color: #C0C0C0; /* Silver */
+    background: #000080;
+    color: #C0C0C0;
     border: none;
     padding: 10px 20px;
     border-radius: 15px;
@@ -510,7 +512,7 @@ footer {
 .cart-actions button:hover {
     transform: scale(1.05);
     box-shadow: 0 4px 15px rgba(0, 0, 128, 0.7);
-    background: #000066; /* Darker navy blue */
+    background: #000066;
 }
 
 /* Responsive Design */
@@ -614,11 +616,11 @@ footer {
 }
 
 .contact-form-content {
-    background: #FFFFFF;
+    background: rgba(255, 255, 255, 0.9); /* Semi-transparent white */
     padding: 20px;
-    border: 2px dashed #000080; /* Navy blue dashed border */
+    border: 2px dashed #000080;
     border-radius: 10px;
-    box-shadow: 0 4px 15px rgba(139, 0, 0, 0.3); /* Blood red shadow */
+    box-shadow: 0 4px 15px rgba(139, 0, 0, 0.3);
     max-width: 400px;
     width: 90%;
     max-height: 80vh;
@@ -626,14 +628,14 @@ footer {
 }
 
 .contact-form-content h2 {
-    color: #C0C0C0; /* Silver */
+    color: #C0C0C0;
     font-size: 24px;
     margin-bottom: 15px;
     font-family: 'Orbitron', sans-serif;
 }
 
 .contact-form-content label {
-    color: #000080; /* Navy blue */
+    color: #000080;
     font-size: 16px;
     font-family: 'Roboto', sans-serif;
     display: block;
@@ -643,12 +645,12 @@ footer {
 .contact-form-content input, .contact-form-content textarea {
     width: 100%;
     padding: 10px;
-    border: 2px solid #000080; /* Navy blue */
+    border: 2px solid #000080;
     border-radius: 5px;
     margin-bottom: 15px;
     font-size: 16px;
     font-family: 'Roboto', sans-serif;
-    color: #2E8B57; /* Emerald green */
+    color: #2E8B57;
 }
 
 .contact-form-content textarea {
@@ -657,8 +659,8 @@ footer {
 }
 
 .contact-form-content button {
-    background: #000080; /* Navy blue */
-    color: #C0C0C0; /* Silver */
+    background: #000080;
+    color: #C0C0C0;
     border: none;
     padding: 10px 20px;
     border-radius: 15px;
@@ -673,7 +675,7 @@ footer {
 .contact-form-content button:hover {
     transform: scale(1.05);
     box-shadow: 0 4px 15px rgba(0, 0, 128, 0.7);
-    background: #000066; /* Darker navy blue */
+    background: #000066;
 }
 
 /* Responsive Contact Form Popup */
