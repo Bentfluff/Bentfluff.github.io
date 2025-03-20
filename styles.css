@@ -707,6 +707,13 @@ footer {
 /* Hits List Styling */
 .hits-list ul li {
     color: blue;
-    font-size: 1.5em;
+    font-size: 1.2em; /* Smaller but still prominent */
     font-weight: bold;
+}
+
+.hits-list ul {
+    max-height: 60vh; /* Limits height to 60% of viewport height */
+    overflow-y: auto; /* Adds vertical scrollbar when needed */
+    padding: 0; /* Removes default padding */
+    margin: 10px 0; /* Adds some spacing around the list */
 }
