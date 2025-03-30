@@ -31,7 +31,6 @@ async function updateStock(productId, quantity) {
     if (product) {
         product.stock = Math.max(0, product.stock - quantity); // Ensure stock doesn't go negative
         console.log(`Updated stock for ${product.name}: ${product.stock}`);
-        // In a real setup, you'd send a POST request to update stock.json
     }
     return products;
 }
@@ -42,15 +41,16 @@ async function renderProducts() {
     const grid = document.getElementById('product-grid');
     grid.innerHTML = ''; // Clear existing content
 
-    products.forEach(product => {
-        const stock = product.stock;
-        const isSoldOut = stock <= 0;
-        const maxQuantity = Math.min(stock, 5); // Limit to stock or 5
+    // Only render the product with id === 1 ("Basic Pack")
+    const firstProduct = products.find(p => p.id === 1);
+    if (firstProduct) {
+        const stock = firstProduct.stock;
+        const isSoldOut = stock <= 0; // True, since stock is 0
 
         const productHTML = `
-            <div class="product-icon ${isSoldOut ? 'sold-out' : ''}" data-id="${product.id}">
-                <img src="images/${product.name.toLowerCase().replace(' ', '-')}-icon.jpg" alt="${product.name} Icon">
-                <h2>${product.name} - $${product.id === 1 ? '49.99' : product.id === 2 ? '99.99' : '149.99'}</h2>
+            <div class="product-icon ${isSoldOut ? 'sold-out' : ''}" data-id="${firstProduct.id}">
+                <img src="images/${firstProduct.name.toLowerCase().replace(' ', '-')}-icon.jpg" alt="${firstProduct.name} Icon">
+                <h2>${firstProduct.name} - $299</h2>
                 <p>${isSoldOut ? 'Sold Out!' : `Available: ${stock}`}</p>
                 ${isSoldOut ? '<button class="sold-out-btn">Sold Out</button>' : `
                     <style>
@@ -111,12 +111,12 @@ async function renderProducts() {
                     </style>
                     <div class="paypal-form-container">
                         <div class="quantity-selector">
-                            <label for="quantity-${product.id}">Quantity: </label>
-                            <select id="quantity-${product.id}">
-                                ${Array.from({ length: maxQuantity }, (_, i) => i + 1).map(q => `<option value="${q}">${q}</option>`).join('')}
+                            <label for="quantity-${firstProduct.id}">Quantity: </label>
+                            <select id="quantity-${firstProduct.id}">
+                                ${Array.from({ length: Math.min(stock, 5) }, (_, i) => i + 1).map(q => `<option value="${q}">${q}</option>`).join('')}
                             </select>
                         </div>
-                        <form onsubmit="handlePurchase(event, ${product.id})">
+                        <form onsubmit="handlePurchase(event, ${firstProduct.id})">
                             <input class="pp-B4BU4HLTV58FS" type="submit" value="Buy Now" />
                             <img class="credit-cards" src="https://www.paypalobjects.com/images/Debit_Credit_APM.svg" alt="cards" />
                             <section>Powered by <img src="https://www.paypalobjects.com/paypal-ui/logos/svg/paypal-wordmark-color.svg" alt="paypal" /></section>
@@ -127,7 +127,7 @@ async function renderProducts() {
         `;
 
         grid.insertAdjacentHTML('beforeend', productHTML);
-    });
+    }
 }
 
 // Handle purchase with quantity
@@ -139,7 +139,6 @@ function handlePurchase(event, productId) {
     updateStock(productId, quantity).then(() => {
         renderProducts(); // Re-render to update stock display
         showNotification(`Purchased ${quantity} ${quantity === 1 ? 'item' : 'items'} successfully!`);
-        // Redirect to PayPal after stock update
         window.open('https://www.paypal.com/ncp/payment/B4BU4HLTV58FS', '_blank');
     });
 }
@@ -157,9 +156,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Sneak Peek button logic for index.html
     const peekButton = document.getElementById('peek-button');
     const peekImage = document.getElementById('peek-image');
-    if (peekButton && peekImage) { // Check if elements exist (only on index.html)
+    if (peekButton && peekImage) {
         peekButton.addEventListener('click', function() {
-            peekImage.style.display = 'block'; // Reveal the image
+            peekImage.style.display = 'block';
         });
     }
 });
