@@ -11,12 +11,6 @@
     <!-- Notification Bar -->
     <div id="notification" class="notification"></div>
 
-    <!-- Cart Icon Hidden on Index -->
-    <div id="cart" style="display: none;">
-        <img src="images/cart-icon.png" alt="Cart" style="width: 25px;">
-        <span id="cart-count">0</span>
-    </div>
-
     <!-- Navigation -->
     <nav class="navbar">
         <div class="logo">SLAB-STASH</div>
@@ -29,10 +23,10 @@
     </nav>
 
     <!-- Hero Section -->
-    <section class="hero">
+    <section class="hero" style="background: url('images/coins-6.jpg') no-repeat center center / cover;">
         <div class="hero-content">
-            <h1 style="color: #C0C0C0; font-family: 'Orbitron', sans-serif; font-size: 60px; text-shadow: 2px 2px 5px #000080;">Crack Open the Coin Craze!</h1>
-            <p style="color: #2E8B57; font-size: 24px;">Get Ready—Your Packs Await at Slab-Stash! Click Below to Discover More and Uncover Hidden Treasures!</p>
+            <h1>Crack Open the Coin Craze!</h1>
+            <p>Get Ready—Your Packs Await at Slab-Stash! Click Below to Discover More and Uncover Hidden Treasures!</p>
             <a href="products.html" class="btn pulse">Explore Packs Now</a>
         </div>
     </section>
@@ -48,15 +42,12 @@
                     <button class="carousel-btn prev-btn" onclick="moveCarousel('prev')">❮</button>
                     <div class="carousel">
                         <div class="carousel-track">
-                            <!-- Add as many images as you'd like here -->
                             <img src="images/coins.jpg" alt="Coins in Action" onclick="openModal(this.src)">
                             <img src="images/coins-2.jpg" alt="More Coins" onclick="openModal(this.src)">
                             <img src="images/coins-3.jpg" alt="More Coins 3" onclick="openModal(this.src)">
                             <img src="images/coins-4.jpg" alt="More Coins 4" onclick="openModal(this.src)">
                             <img src="images/coins-5.jpg" alt="More Coins 5" onclick="openModal(this.src)">
-                            <img src="images/coins-6.jpg" alt="More Coins 6" onclick="openModal(this.src)">
-                            <!-- Duplicate the first image for seamless looping -->
-                            <img src="images/coins.jpg" alt="Coins in Action" onclick="openModal(this.src)">
+                            <img src="images/coins.jpg" alt="Coins in Action" onclick="openModal(this.src)"> <!-- Duplicate for loop -->
                         </div>
                     </div>
                     <button class="carousel-btn next-btn" onclick="moveCarousel('next')">❯</button>
@@ -73,16 +64,16 @@
                 </div>
             </div>
 
-            <!-- Join the Stash List -->
+            <!-- Join the SMS Stash List -->
             <div class="block">
-                <h2>Join the Stash List</h2>
-                <p>Stay ahead with exclusive updates on new releases, collector tips, and special offers. Sign up now and never miss a chance to uncover hidden treasures!</p>
-                <form class="stash-form">
-                    <input type="text" placeholder="Name" required>
-                    <input type="email" placeholder="Email" required>
-                    <button type="submit" class="btn">Sign Up</button>
+                <h2>Join the SMS Stash List</h2>
+                <p>Stay ahead with exclusive text updates on new releases, collector tips, and special offers. Sign up now and never miss a chance to uncover hidden treasures!</p>
+                <form class="stash-form" onsubmit="this.action = 'sms:8325997055?body=' + encodeURIComponent('Sign me up: ' + document.getElementById('sms-name').value + ', ' + document.getElementById('sms-phone').value); showNotification('Opening your SMS app—please hit send to confirm!');">
+                    <input type="text" placeholder="Name" id="sms-name" required>
+                    <input type="tel" placeholder="Phone Number" id="sms-phone" required>
+                    <button type="submit" class="btn">Sign Up for Texts</button>
                 </form>
-                <img src="images/signup.jpg" alt="Join the Stash" class="content-image">
+                <img src="images/signup.jpg" alt="Join the SMS Stash" class="content-image">
             </div>
         </div>
     </section>
@@ -103,7 +94,6 @@
         <img id="zoomedImage" class="modal-content" src="">
     </div>
 
-    <script src="https://js.stripe.com/v3/"></script>
     <script src="scripts.js"></script>
     <!-- Inline JavaScript for Carousel and Modal -->
     <script>
@@ -111,7 +101,7 @@
         let currentIndex = 0;
         const track = document.querySelector('.carousel-track');
         const images = document.querySelectorAll('.carousel-track img');
-        const totalImages = images.length - 1; // Subtract 1 because the last image is a duplicate
+        const totalImages = images.length - 1; // Adjust for duplicate
 
         function moveCarousel(direction) {
             if (direction === 'next') {
@@ -120,23 +110,18 @@
                 currentIndex--;
             }
 
-            // Seamless looping
             if (currentIndex >= totalImages) {
-                // Jump to the first image (index 0) without animation
                 track.style.transition = 'none';
                 currentIndex = 0;
                 track.style.transform = `translateX(-${currentIndex * 220}px)`;
-                // Trigger a reflow to reset the transition
                 void track.offsetWidth;
             } else if (currentIndex < 0) {
-                // Jump to the last real image (before the duplicate)
                 track.style.transition = 'none';
                 currentIndex = totalImages - 1;
                 track.style.transform = `translateX(-${currentIndex * 220}px)`;
                 void track.offsetWidth;
             }
 
-            // Apply the transition for smooth sliding
             track.style.transition = 'transform 0.5s ease-in-out';
             track.style.transform = `translateX(-${currentIndex * 220}px)`;
         }
@@ -154,7 +139,6 @@
             modal.style.display = 'none';
         }
 
-        // Close modal when clicking outside the image
         modal.addEventListener('click', (e) => {
             if (e.target === modal) {
                 closeModal();

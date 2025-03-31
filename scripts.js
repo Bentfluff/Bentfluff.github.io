@@ -17,10 +17,17 @@ async function fetchStock() {
     try {
         const response = await fetch('stock.json');
         const data = await response.json();
+        console.log('Fetched stock.json:', JSON.stringify(data)); // Debug log
         return data.products;
     } catch (error) {
         console.error('Error fetching stock:', error);
-        return [];
+        // Fallback to a default product if fetch fails
+        return [{
+            id: 1,
+            name: "Basic Pack",
+            price: 299.99,
+            stock: 0
+        }];
     }
 }
 
@@ -29,28 +36,31 @@ async function updateStock(productId, quantity) {
     const products = await fetchStock();
     const product = products.find(p => p.id === productId);
     if (product) {
-        product.stock = Math.max(0, product.stock - quantity); // Ensure stock doesn't go negative
-        console.log(`Updated stock for ${product.name}: ${product.stock}`);
+        product.stock = Math.max(0, product.stock - quantity);
+        console.log(`Updated stock for ${product.name}: ${product.stock}`); // Debug log
     }
     return products;
 }
 
-// Render product cards
+// Render product cards (only one item)
 async function renderProducts() {
     const products = await fetchStock();
     const grid = document.getElementById('product-grid');
+    if (!grid) return; // Only render if on products page
     grid.innerHTML = ''; // Clear existing content
 
-    // Only render the product with id === 1 ("Basic Pack")
-    const firstProduct = products.find(p => p.id === 1);
-    if (firstProduct) {
-        const stock = firstProduct.stock;
-        const isSoldOut = stock <= 0; // True, since stock is 0
+    // Only render the first product (single item for sale)
+    const product = products[0];
+    if (product) {
+        const stock = product.stock; // Directly use stock from JSON
+        console.log('Rendering product with stock:', stock); // Debug log
+        const price = product.price !== undefined ? product.price : 299.99;
+        const isSoldOut = stock <= 0;
 
         const productHTML = `
-            <div class="product-icon ${isSoldOut ? 'sold-out' : ''}" data-id="${firstProduct.id}">
-                <img src="images/${firstProduct.name.toLowerCase().replace(' ', '-')}-icon.jpg" alt="${firstProduct.name} Icon">
-                <h2>${firstProduct.name} - $299.99</h2>
+            <div class="product-icon ${isSoldOut ? 'sold-out' : ''}" data-id="${product.id}">
+                <img src="images/${product.name.toLowerCase().replace(' ', '-')}-icon.jpg" alt="${product.name} Icon">
+                <h2>${product.name} - $${price.toFixed(2)}</h2>
                 <p>${isSoldOut ? 'Sold Out!' : `Available: ${stock}`}</p>
                 ${isSoldOut ? '<button class="sold-out-btn">Sold Out</button>' : `
                     <style>
@@ -111,12 +121,12 @@ async function renderProducts() {
                     </style>
                     <div class="paypal-form-container">
                         <div class="quantity-selector">
-                            <label for="quantity-${firstProduct.id}">Quantity: </label>
-                            <select id="quantity-${firstProduct.id}">
+                            <label for="quantity-${product.id}">Quantity: </label>
+                            <select id="quantity-${product.id}">
                                 ${Array.from({ length: Math.min(stock, 5) }, (_, i) => i + 1).map(q => `<option value="${q}">${q}</option>`).join('')}
                             </select>
                         </div>
-                        <form onsubmit="handlePurchase(event, ${firstProduct.id})">
+                        <form onsubmit="handlePurchase(event, ${product.id})">
                             <input class="pp-B4BU4HLTV58FS" type="submit" value="Buy Now" />
                             <img class="credit-cards" src="https://www.paypalobjects.com/images/Debit_Credit_APM.svg" alt="cards" />
                             <section>Powered by <img src="https://www.paypalobjects.com/paypal-ui/logos/svg/paypal-wordmark-color.svg" alt="paypal" /></section>
@@ -145,12 +155,8 @@ function handlePurchase(event, productId) {
 
 // Initialize page on load
 document.addEventListener('DOMContentLoaded', () => {
-    renderProducts();
-
-    // Contact page logic
-    if (window.location.pathname === '/contact.html' || window.location.pathname === '/contact') {
-        const contactPopup = document.getElementById('contact-form-popup');
-        if (contactPopup) contactPopup.style.display = 'block';
+    if (document.getElementById('product-grid')) {
+        renderProducts();
     }
 
     // Sneak Peek button logic for index.html
