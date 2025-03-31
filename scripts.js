@@ -50,7 +50,7 @@ async function renderProducts() {
         const productHTML = `
             <div class="product-icon ${isSoldOut ? 'sold-out' : ''}" data-id="${firstProduct.id}">
                 <img src="images/${firstProduct.name.toLowerCase().replace(' ', '-')}-icon.jpg" alt="${firstProduct.name} Icon">
-                <h2>${firstProduct.name} - $299</h2>
+                <h2>${firstProduct.name} - $299.99</h2>
                 <p>${isSoldOut ? 'Sold Out!' : `Available: ${stock}`}</p>
                 ${isSoldOut ? '<button class="sold-out-btn">Sold Out</button>' : `
                     <style>

@@ -29,11 +29,10 @@
     </nav>
 
     <!-- Hero Section -->
-    <section class="hero" style="text-align: center; padding: 100px 20px; min-height: 60vh; margin-bottom: 20px;">
+    <section class="hero">
         <div class="hero-content">
             <h1 style="color: #C0C0C0; font-family: 'Orbitron', sans-serif; font-size: 60px; text-shadow: 2px 2px 5px #000080;">Crack Open the Coin Craze!</h1>
             <p style="color: #2E8B57; font-size: 24px;">Get Ready—Your Packs Await at Slab-Stash! Click Below to Discover More and Uncover Hidden Treasures!</p>
-            <img src="images/hero-coin.jpg" alt="Mystery Coin" class="hero-image" style="margin: 20px auto; display: block;">
             <a href="products.html" class="btn pulse">Explore Packs Now</a>
         </div>
     </section>
@@ -44,8 +43,24 @@
             <!-- Why Choose Slab-Stash -->
             <div class="block">
                 <h2>Why Choose Slab-Stash?</h2>
-                <p>Step into the exhilarating world of coin collecting with Slab-Stash! Our mystery packs deliver heart-pounding anticipation—imagine tearing open a pack to reveal a graded Silver or possibly even a GOLD Coin. Affordable and dynamic, we make numismatics accessible for all, turning your collection into a treasure trove.</p>
-                <img src="images/coins.jpg" alt="Coins in Action" class="content-image">
+                <p>Rip right into the thrilling world of coin collecting with Slab-Stash! Our mystery packs bring heart-pounding excitement—imagine tearing open a pack to uncover a graded Silver or even a dazzling Gold coin, or perhaps a rare, historic coin worth a fortune! Affordable, dynamic, and packed with potential, we make numismatics accessible to everyone, transforming your collection into a true treasure trove.</p>
+                <div class="carousel-container">
+                    <button class="carousel-btn prev-btn" onclick="moveCarousel('prev')">❮</button>
+                    <div class="carousel">
+                        <div class="carousel-track">
+                            <!-- Add as many images as you'd like here -->
+                            <img src="images/coins.jpg" alt="Coins in Action" onclick="openModal(this.src)">
+                            <img src="images/coins-2.jpg" alt="More Coins" onclick="openModal(this.src)">
+                            <img src="images/coins-3.jpg" alt="More Coins 3" onclick="openModal(this.src)">
+                            <img src="images/coins-4.jpg" alt="More Coins 4" onclick="openModal(this.src)">
+                            <img src="images/coins-5.jpg" alt="More Coins 5" onclick="openModal(this.src)">
+                            <img src="images/coins-6.jpg" alt="More Coins 6" onclick="openModal(this.src)">
+                            <!-- Duplicate the first image for seamless looping -->
+                            <img src="images/coins.jpg" alt="Coins in Action" onclick="openModal(this.src)">
+                        </div>
+                    </div>
+                    <button class="carousel-btn next-btn" onclick="moveCarousel('next')">❯</button>
+                </div>
             </div>
 
             <!-- Sneak Peek -->
@@ -82,9 +97,69 @@
         </ul>
     </footer>
 
+    <!-- Modal for Zoomed Image -->
+    <div id="imageModal" class="modal">
+        <span class="close-btn" onclick="closeModal()">×</span>
+        <img id="zoomedImage" class="modal-content" src="">
+    </div>
+
     <script src="https://js.stripe.com/v3/"></script>
     <script src="scripts.js"></script>
+    <!-- Inline JavaScript for Carousel and Modal -->
+    <script>
+        // Carousel functionality
+        let currentIndex = 0;
+        const track = document.querySelector('.carousel-track');
+        const images = document.querySelectorAll('.carousel-track img');
+        const totalImages = images.length - 1; // Subtract 1 because the last image is a duplicate
+
+        function moveCarousel(direction) {
+            if (direction === 'next') {
+                currentIndex++;
+            } else {
+                currentIndex--;
+            }
+
+            // Seamless looping
+            if (currentIndex >= totalImages) {
+                // Jump to the first image (index 0) without animation
+                track.style.transition = 'none';
+                currentIndex = 0;
+                track.style.transform = `translateX(-${currentIndex * 220}px)`;
+                // Trigger a reflow to reset the transition
+                void track.offsetWidth;
+            } else if (currentIndex < 0) {
+                // Jump to the last real image (before the duplicate)
+                track.style.transition = 'none';
+                currentIndex = totalImages - 1;
+                track.style.transform = `translateX(-${currentIndex * 220}px)`;
+                void track.offsetWidth;
+            }
+
+            // Apply the transition for smooth sliding
+            track.style.transition = 'transform 0.5s ease-in-out';
+            track.style.transform = `translateX(-${currentIndex * 220}px)`;
+        }
+
+        // Modal functionality
+        const modal = document.getElementById('imageModal');
+        const zoomedImage = document.getElementById('zoomedImage');
+
+        function openModal(imageSrc) {
+            modal.style.display = 'flex';
+            zoomedImage.src = imageSrc;
+        }
+
+        function closeModal() {
+            modal.style.display = 'none';
+        }
+
+        // Close modal when clicking outside the image
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+    </script>
 </body>
-</html> 
- 
- 
+</html>
